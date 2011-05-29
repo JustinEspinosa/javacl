@@ -1,0 +1,17 @@
+?tacl macro
+[#def fi routine |body|
+ #xfileinfo [#rest]
+]
+[#def v routine |body|
+ #set #defaults [#rest]
+]
+[#def exit routine |body|
+ #set #exit -1
+]
+
+[#def _prompter macro |body|
+ #set #prefix [#defaults]
+]
+
+#set #pmsearchlist /bin /usr/bin /usr/local/bin
+
