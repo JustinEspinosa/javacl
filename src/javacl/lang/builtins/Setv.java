@@ -12,7 +12,7 @@ import javacl.lang.parser.WriteVariable;
 public class Setv extends Set {
 	@Override
 	public String expand(Context parserContext) throws JavaclException {
-		
+		//TODO the type should also be copied
 		String argStr = parserContext.getArgument().getArgument();
 		Matcher matches = ParserUtils.word.matcher(argStr);
 		

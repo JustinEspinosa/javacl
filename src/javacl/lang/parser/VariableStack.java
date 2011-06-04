@@ -8,10 +8,16 @@ import javacl.lang.JavaclException;
 
 public class VariableStack {
 	private Vector<Variable> variables = new Vector<Variable>();
-	private String variableName;
+	private String           variableName;
+	private Directory        parentDir;
 	
-	public VariableStack(String name){
+	public VariableStack(Directory parent, String name){
 		variableName = name;
+		parentDir    = parent;
+	}
+	
+	public Directory getDirectory(){
+		return parentDir;
 	}
 	
 	public String getName(){
@@ -49,6 +55,10 @@ public class VariableStack {
 	
 	public Variable push(int frame) throws JavaclException{
 		return push(Text.class, frame);
+	}
+	
+	public int getIndex(Variable v){
+		return variables.indexOf(v);
 	}
 	
 }

@@ -27,6 +27,8 @@ public class BuiltinDirectory {
 		registerBuiltin(new Exit());
 		registerBuiltin(new PmSearchList());
 		registerBuiltin(new Prefix());
+		registerBuiltin(new Home());
+		registerBuiltin(new Uselist());
 	}
 	
 	

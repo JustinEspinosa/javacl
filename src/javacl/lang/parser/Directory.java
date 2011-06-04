@@ -30,7 +30,7 @@ public class Directory extends Variable {
 	private VariableStack getStack(String name){
 		name = name.toLowerCase();
 		
-		VariableStack stack = new VariableStack(name);
+		VariableStack stack = new VariableStack(this,name);
 		
 		if(content.containsKey(name))
 			stack = content.get(name);
@@ -59,7 +59,7 @@ public class Directory extends Variable {
 		}
 	}
 	
-	public Variable getByShortName(String name){
+	public Variable getChild(String name){
 		name = name.toLowerCase();
 		
 		Variable found = null;
@@ -71,6 +71,11 @@ public class Directory extends Variable {
 
 	public String[] variables() {
 		return content.keySet().toArray(new String[0]);
+	}
+	
+	@Override
+	public String toString() {
+		return getStack().getName()+":";
 	}
 
 }

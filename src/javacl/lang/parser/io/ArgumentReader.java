@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class ArgumentReader extends ConsistentEolReader {
 
 	//sort manually (or in static init if you want)
-	private static char[] separator = new char[]{'\t','\n','\r',' '};
+	protected static final char[] separator = new char[]{'\t','\n','\r',' '};
 	
 	private static boolean wordChar(int c){
 		return (c>0x2F && c<0x3A) || (c>0x40 && c<0x5B) || (c>0x60 && c<0x7B);
@@ -36,7 +36,15 @@ public class ArgumentReader extends ConsistentEolReader {
 		consumed = false;
 		return currentChar;
 	}
+	
+	protected final int current(){
+		return currentChar;
+	}
 
+	public boolean eof(){
+		return currentChar == -1;
+	}
+	
 	public String readToken() throws IOException{
 		StringBuilder builder = new StringBuilder();
 

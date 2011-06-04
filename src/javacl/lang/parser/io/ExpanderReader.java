@@ -187,10 +187,23 @@ public class ExpanderReader extends PusherReader {
 		}
 	}
 	
+	private boolean detectSemiColon(){
+		if(currentChar==';' && escapeNext.get()){
+			commented = false;
+			
+			if(!isBracketed){
+				commandFound();
+				stop = true;
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	private boolean detectSeparator(){
 		if(startup)
 			return true;
-		
+		//TODO More separators exists.
 		if( !seenSeparator && Arrays.binarySearch(ParserUtils.separator,(char)currentChar) > -1 ){
 			seenSeparator = true;
 			commandFound();
@@ -200,7 +213,7 @@ public class ExpanderReader extends PusherReader {
 	}
 	
 	private boolean detectEnclosure(){
-		if( currentChar == '|' && bracketLevel == 0){
+		if( currentChar == '|' && bracketLevel == 0 && !escapeNext.get()){
 			if(!seenEnclosure)
 				seenEnclosure = true;
 			
@@ -270,6 +283,7 @@ public class ExpanderReader extends PusherReader {
 			if( detectLeftBracket()  )
 			if( detectRightBracket() )
 			if( detectEnclosure()    )
+			if( detectSemiColon()    )
 			if( detectSeparator()    )
 			if( detectEol()          )
 			if( detectComment()      )

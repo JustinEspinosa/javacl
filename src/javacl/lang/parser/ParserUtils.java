@@ -2,7 +2,6 @@ package javacl.lang.parser;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javacl.lang.JavaclException;
@@ -34,7 +33,8 @@ public class ParserUtils {
 		return data;
 	}
 	
-	public static VariableType findVariable(Context c,String name) throws RuntimeException{
+	
+	public static VariableType findVariable(Context c,String name) throws JavaclException{
 		
 		if(name.length()>0 && name.charAt(0)=='#'){
 			//# indicates a built-in variable
@@ -46,16 +46,9 @@ public class ParserUtils {
 		}
 
 		//OK, then look for it in the user variables
-		VariableType var = c.getEnv().getHome().getByShortName(name);
+		VariableType var = c.getEnv().findVariable(name);
 		if(var!=null)
 			return var;
-		
-		Vector<Directory> dlist = c.getEnv().getSearchList();
-		for(Directory dir : dlist){
-			var = dir.getByShortName(name);	
-			if(var!=null)
-				return var;
-		}
 		
 		return null;
 	}
@@ -71,4 +64,5 @@ public class ParserUtils {
 			
 		return bldr.toString().trim();
 	}
+
 }

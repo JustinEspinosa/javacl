@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -19,6 +20,8 @@ import javacl.lang.parser.Routine;
 import javacl.lang.parser.RuntimeException;
 import javacl.lang.parser.Variable;
 import javacl.lang.parser.WriteVariable;
+import javacl.lang.parser.io.ArgumentReader;
+import javacl.lang.parser.io.CmdArgumentReader;
 
 public class EnvironmentUtils {
 
@@ -122,7 +125,14 @@ public class EnvironmentUtils {
 		StringBuilder builder = new StringBuilder();
 		
 		pb.command().add(f.getAbsolutePath());
-		pb.command().add(arg);
+		
+		try{
+			ArgumentReader r1 = new CmdArgumentReader(new StringReader(arg));
+			r1.read();
+			while(!r1.eof())
+				pb.command().add(r1.readToken());
+		}catch(IOException e){}
+		
 		pb.directory(new File(FsUtils.getDefaults(false)));
 		pb.redirectErrorStream(true);
 		

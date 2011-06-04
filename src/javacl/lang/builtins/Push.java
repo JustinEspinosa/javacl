@@ -16,7 +16,7 @@ public class Push extends Builtin {
 		Matcher matches = ParserUtils.word.matcher(argumentList);
 		
 		while(matches.find()){
-			parserContext.getEnv().getHome().push(matches.group());
+			parserContext.getEnv().push(matches.group());
 		}
 		
 		return new String();

@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 
 import javacl.lang.JavaclException;
 import javacl.lang.parser.Context;
+import javacl.lang.parser.Directory;
 import javacl.lang.parser.Macro;
 import javacl.lang.parser.ParserUtils;
 import javacl.lang.parser.Routine;
@@ -21,6 +22,7 @@ public class Def extends Builtin {
 		types.put("text", Text.class);
 		types.put("routine", Routine.class);
 		types.put("macro", Macro.class);
+		types.put("directory", Directory.class);
 		//...
 	}
 	
@@ -47,16 +49,16 @@ public class Def extends Builtin {
 		if(cl==null)
 			throw new JavaclException("Unknown type ");
 		
-		String text = parserContext.getArgument().getEnclosure("body");
-		if(text==null)
-			throw new JavaclException("No body");
+		Variable var = parserContext.getEnv().push(name, cl);
+		if(var instanceof WriteVariable){
+			String text = parserContext.getArgument().getEnclosure("body");
 		
-		parserContext.getEnv().getHome().push(name, cl);
+			if(text==null)
+				throw new JavaclException("No body");
 		
-		Variable var = parserContext.getEnv().getHome().getByShortName(name);
 		
-		if(var instanceof WriteVariable)
 			((WriteVariable) var).set(text, parserContext);
+		}
 		
 		return new String();
 	}

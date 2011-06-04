@@ -20,9 +20,25 @@ public class Variable implements VariableType{
 	public void setFrame(int f){
 		frame = f;
 	}
+	
 	public int getFrame(){
 		return frame;
 	}
 	
+	public Directory getParent(){
+		return getStack().getDirectory();
+	}
+	
+	public String fullPath(){
+		if(getParent()==null)
+			return toString();
+		
+		return getParent().fullPath() + this;
+	}
+	
+	@Override
+	public String toString() {
+		return getStack().getName()+"."+getStack().getIndex(this);
+	}
 
 }
