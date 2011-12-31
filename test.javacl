@@ -1,0 +1,59 @@
+?tacl macro
+
+== cool
+
+[#def go routine |body|
+ #frame
+ #push var
+ 
+ #set var hello
+ #output [var]
+ out
+ 
+ #unframe
+]
+
+[#def out macro |body|
+   #output [#rest]
+]
+
+[#push 
+var
+var2
+a
+]
+
+#set var2 yeah but
+#set var yeah == comment
+
+#push var
+#set var no
+
+#output [var2] [var]
+
+#pop var
+
+go ok how are you
+#output hello
+
+#set a 2
+
+#output [#compute (1+2-1-1-2)*20 ]
+
+[#if ( 1 > 2 or 1 < [a] ) and not ( 1 < 2 and 2 > 1 )
+   |then| #output if ok
+   |else| #output if nok
+]
+#set a 0
+#push break
+[#loop |while| [a] < 10 and not [break]
+  |do|
+  #output [a]
+  #set a [#compute [a]+1]
+  [#if [a]>5 |then| #set break -1]
+]
+
+#output [var2] [var]
+
+
+
